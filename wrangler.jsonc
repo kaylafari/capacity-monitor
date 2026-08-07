@@ -1,0 +1,10 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "capacity-check-api",
+	"main": "src/index.js",
+	"compatibility_date": "2026-08-06",
+	"account_id": "1992b61a6d49f8d52840069dea0b48d4",
+	"observability": {
+		"enabled": true
+	}
+}
