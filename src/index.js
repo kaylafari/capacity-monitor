@@ -16,6 +16,18 @@ function json(data, status = 200) {
 	});
 }
 
+function queryValue(url, name) {
+	const value = url.searchParams.get(name);
+	if (value === null) return null;
+	try {
+		// Some clients encode an already-encoded query value, producing values
+		// such as `01%2F14%2F26` after URLSearchParams decodes the URL once.
+		return decodeURIComponent(value);
+	} catch {
+		return value;
+	}
+}
+
 export default {
 	async fetch(request, env) {
 		const url = new URL(request.url);
@@ -39,8 +51,8 @@ export default {
 			return json({ error: "MASTER_SHEET_URL is not configured" }, 500);
 		}
 
-		const code = url.searchParams.get("code");
-		const date = url.searchParams.get("date");
+		const code = queryValue(url, "code");
+		const date = queryValue(url, "date");
 		if (!code || !date) {
 			return json({ error: "Both 'code' and 'date' query parameters are required" }, 422);
 		}
